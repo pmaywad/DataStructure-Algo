@@ -1,5 +1,5 @@
 """
-Python implementation of adjaceny list graph representation
+Python implementation of algo to detect cycle in di-graph
 """
 
 
