@@ -1,5 +1,5 @@
 """
-Python implementation of algo to detect cycle in di-graph
+Python implementation for cycle detection in undirected graph
 """
 
 
@@ -12,8 +12,6 @@ class Graph:
     def __init__(self, vertices):
         self.v = vertices
         self.vertices = [None]*self.v
-        self.visited = [False]*self.v
-        self.recursion_Stack = [False]*self.v
 
     def add_edge(self, src, dest):
 
@@ -22,28 +20,10 @@ class Graph:
         src_node.next = self.vertices[src]
         self.vertices[src] = src_node
 
-    def cyclic_util(self, node):
-        self.visited[node] = True
-        self.recursion_Stack[node] = True
-        temp = self.vertices[node]
-        while temp:
-            if not self.visited[temp.data]:
-                if self.cyclic_util(temp.data):
-                    return True
-            elif self.recursion_Stack[temp.data]:
-                return True
-            temp = temp.next
-        self.recursion_Stack[node] = False
-        return False
-
-
-    def is_cyclic(self):
-        for i in range(self.v):
-            if not self.visited[i]:
-                if self.cyclic_util(i):
-                    return True
-
-        return False
+        #Undirected graph, adding src node to destination list
+        dest_node = Node(src)
+        dest_node.next = self.vertices[dest]
+        self.vertices[dest] = dest_node
 
     def print_graph(self):
         for i in range(self.v):
@@ -53,18 +33,15 @@ class Graph:
                 print(f'-->{temp.data}', end='')
                 temp = temp.next
 
-
 if __name__=='__main__':
-    g = Graph(4)
-    g.add_edge(0, 1)
-    g.add_edge(0, 2)
-    g.add_edge(1, 2)
-    g.add_edge(2, 0)
-    g.add_edge(2, 3)
-    g.add_edge(3, 3)
-    g.print_graph()
-    print()
-    if g.is_cyclic():
-        print("Graph has a cycle")
-    else:
-        print("Graph has no cycle")
+    v = 5
+    graph = Graph(v)
+    graph.add_edge(0, 1)
+    graph.add_edge(0, 4)
+    graph.add_edge(1, 2)
+    graph.add_edge(1, 3)
+    graph.add_edge(1, 4)
+    graph.add_edge(2, 3)
+    graph.add_edge(3, 4)
+
+    graph.print_graph()
