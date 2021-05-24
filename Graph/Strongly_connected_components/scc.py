@@ -44,14 +44,13 @@ class Graph:
                 self.fill_order(visited, stack, i)
 
         transpose = self.get_transpose()
-        print(transpose.graph)
 
         visited = [False]*self.v
-        print(stack)
+
         while stack:
             node = stack.pop()
             if not visited[node]:
-                transpose.DFSUtils(visited, i)
+                transpose.DFSUtils(visited, node)
                 print("")
 
 
@@ -59,13 +58,9 @@ class Graph:
 
 if __name__=='__main__':
     g = Graph(8)
-    g.add_edge(0, 1)
-    g.add_edge(1, 2)
-    g.add_edge(2, 3)
-    g.add_edge(2, 4)
-    g.add_edge(3, 0)
-    g.add_edge(4, 5)
-    g.add_edge(5, 6)
-    g.add_edge(6, 4)
-    g.add_edge(6, 7)
+    edges = [(0, 1),(1, 2),(2, 3),(2, 4),(3, 0),(4, 5),(5, 6),(6, 4),(6, 7)]
+    for src, dest in edges:
+        g.add_edge(src, dest)
+
+    print("Strongly connected components of graph are:")
     g.find_scc()
